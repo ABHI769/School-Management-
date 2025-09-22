@@ -1,5 +1,5 @@
 import mysql.connector as a
-con =a.connect(host="localhost",user="root",passwd="8595985925!!",database="principal")
+con =a.connect(host="localhost",user="root",passwd="PasswordOfDatabase",database="DatabaseName")
 
 def ast():
     n=input("Student Name:")
