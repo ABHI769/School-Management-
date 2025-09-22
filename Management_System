@@ -1,0 +1,278 @@
+import mysql.connector as a
+con =a.connect(host="localhost",user="root",passwd="8595985925!!",database="principal")
+
+def ast():
+    n=input("Student Name:")
+    c=input("Class Name:")
+    r=input("Roll No:")
+    a=input("Address:")
+    p=input("Phone:")
+    ad=int(input("Addmission number:"))
+    data=(n,c,r,a,p,ad)
+    sql='insert into student values(%s,%s,%s,%s,%s,%s)'
+    c=con.cursor()
+    c.execute(sql,data)
+    con.commit()
+    print("Data Entered Successfully")
+    print(">------------------------------------------<")
+    main()
+
+
+def rst():
+    c=input("Class Name:")
+    r=input("Roll No:")
+    data=(c,r)
+    sql='delete from student where CLASS=%s and ROLL=%s'
+    c=con.cursor()
+    c.execute(sql,data)
+    con.commit()
+    print("Data Updated")
+    print(">--------------------------------<")
+    main()
+
+
+def addt():
+    n=input("Teacher:")
+    p=input("Post:")
+    s=input("salary:")
+    a=input("Address:")
+    ph=input("Phone:")
+    data=(n,p,s,a,ph)
+    sql='insert into teacher values(%s,%s,%s,%Ss,%s)'
+    c=con.cursor()
+    c.execute(sql,data)
+    con.commit()
+    print("Data Entered Successfully")
+    print(">------------------------------------------<")
+    main()
+
+def remt():
+    n=input("Teacher Name:")
+    ac=input("Account No:")
+    data=(n,ac)
+    sql='delete from teacher where name=%s and acno=%s'
+    c=con.cursor()
+    c.execute(sql,data)
+    con.commit()
+    print("Data Updated")
+    print(">-----------------------------------------------<")
+    main()
+
+def abclass():
+    d=input("Data:")
+    cl=input("Class:")
+    ab=input("Names of Absent Students:")
+    data=(d,cl,ab)
+    sql="insert into cattendance values(%s,%s,%s)"
+    c=con.cursor()
+    c.execute(sql,data)
+    con.commit()
+    print("Data Updated")
+    print(">----------------------------------------------------<")
+    main()
+
+def abteacher():
+    d=input("Date:")
+    ab=input("Names of Absent Teacher:")
+    data=(d,ab)
+    sql="insert into cattendance values(%s,%s,%s)"
+    c=con.cursor()
+    c.execute(sql,data)
+    con.commit()
+    print("Data Updated")
+    print(">-----------------------------------------------------------<")
+    main()
+
+
+def submitf():
+    n=input("Student Name:")
+    c=input("Class Name:")
+    r=input("Roll No:")
+    m=input("Month and Year:")
+    f=input("Fees:")
+    d=input("Date:")
+    data=(n,c,r,m,f,d)
+    sql='insert into fees values(%s,%s,%s,%s,%s,%s)'
+    c=con.cursor()
+    c.execute(sql,data)
+    con.commit()
+    print("Data Entered Successfully")
+    print(">-----------------------------------------------------------<")
+    main()
+
+
+def pays():
+    n=input("Teacher Name:")
+    m=input("Month:")
+    p=input("Yes/No:")
+    data=(n,m,p)
+    sql='insert into salary values(%s,%s,%s)'
+    c=con.cursor()
+    c.execute(sql,data)
+    con.commit()
+    print("Data Entered Successfully")
+    print(">----------------------------------------------------------------<")
+    main()
+
+def dclass():
+    cl=input("Class:")
+    data=(cl,)
+    sql="select * from student where class=%s"
+    c=con.cursor()
+    c.execute(sql,data)
+    d=c.fetchall()       
+    for i in d:
+        print("NAME:",i[0])
+        print("CLASS:",i[1])
+        print("ROLL:",i[2])
+        print("ADDRESS:",i[3])
+        print("PHONE;",i[4])
+        print(">----------------------------------------------------------------<")
+    print(">---------------------------------------------------------------------<")
+    main()
+
+
+def dteacher():
+    sql="select * from teacher"
+    c=con.cursor()
+    c.execute(sql)
+    d=c.fetchall()
+    for i in d:
+        print("NAME:",i[0])
+        print("POST:",i[1])
+        print("SALARY:",i[2])
+        print("ADDRESS:",i[3])
+        print("PHONE:",i[4])
+        print("ACNO:",i[5])
+        print(">------------------------------------------<")
+    print(">-----------------------------------------------------<")
+    main()
+
+
+def dstudent():
+    sql="select * from student"
+    c=con.cursor()
+    c.execute(sql)
+    d=c.fetchall()
+    for i in d: 
+        print("NAME:",i[0]) 
+        print("CLASS:",i[1])
+        print("ROLL NUMBER:",i[2])
+        print("ADDRESS:",i[3])
+        print("PHONE NUMBER:",i[4])
+        print(">--------------------------------------------------------<")
+    print(">---------------------------------------------------------<")
+    main()
+
+
+def searchstu():
+    ad=input("Enter admission number")
+    cur=con.cursor()
+    sql="select * from book where admission=%s"
+    cur.execute(sql,ad)
+    rows=cur.fetchall()
+    con.close()
+    print()
+    print(">-----------------------------------------------<")
+    main()
+
+
+def searchtea():
+    ac=input("Account:")
+    sql="select * from teacher where account=%s"
+    cur.execute(sql,ac)
+    rows=cur.fetchall()
+    print(rows)
+    print(">--------------------------------------------------------<")
+    main()
+
+        
+def main():
+    print("""                   JINVANI BHARTI PUBLIC SCHOOL
+                1. MANAGE STUDENTS
+                2. MANAGE TEACHERS
+                3. EXIT                    
+""")
+    choice=input("Enter Task No:")
+    print(">------------------<")
+    if(choice=='1'):
+        student()
+    elif(choice=='2'):
+        teacher()
+    elif(choice=='3'):
+        print("EXITING....")
+        con.close()
+    else:
+        print("Wrong choice.Choose again.")
+        main()
+
+def student():
+    print("""           JINVANI BHARTI PUBLIC SCHOOL
+            1. ADD STUDENT
+            2. REMOVE STUDENT
+            3. CLASS ATTENDANCE
+            4. SUBMIT FEES
+            5. DISPLAY CLASS
+            6. STUDENT LIST
+            7. SEARCH STUDENT
+            8. EXIT
+        """)
+    choice=input("Enter Task No:")
+    print(">--------------------------<")
+    if(choice=='1'):
+        ast()
+    elif(choice=='2'):
+        rst()
+    elif(choice=='3'):
+        abclass()
+    elif(choice=='4'):
+        submit()
+    elif(choice=='5'):
+        dclass()
+    elif(choice=='6'):
+        dstudent()
+    elif(choice=='7'):
+        searchstu()
+    elif(choice=='8'):
+        print("Exiting....")
+        exit()
+    else:
+        print("Wrong choice.....")
+        main()
+
+def teacher():
+    print("""               JINVANI BHARTI PUBLIC SCHOOL
+        1. ADD TEACHER
+        2. REMOVE TEACHER
+        3. TEACHER ATTENDANCE
+        4. PAY SALARY
+        5. TEACHERS LIST
+        6. SEARCH TEACHER
+        7. EXIT
+    """)
+    choice=input("Enter Task No:")
+    print(">---------------------<")
+    if (choice=='1'):
+        addt()
+    elif(choice=='2'):
+        remt()
+    elif(choice=='3'):
+        abteacher()
+    elif(choice=='4'):
+        pays()
+    elif(choice=='5'):
+        dteacher()
+    elif(choice=='6'):
+        searchtea()
+    elif(choice=='7'):
+        print("Wrong choice....")
+        main()
+          
+def pswd():
+    p=input("Password:")
+    if p=="12345":
+        main()
+    else:
+        print("Wrong Password")
+        pswd()
+pswd()
